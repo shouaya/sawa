@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping>
+	<query name="find_user_by_phone">
+	    <![CDATA[FROM MiniUserModel e WHERE e.phone = :phone ORDER BY e.id]]>
+    </query>
+
+	<query name="find_user_by_phone_and_token">
+		<![CDATA[FROM MiniUserModel e WHERE e.phone = :phone and e.token = :token ORDER BY e.id]]>
+	</query>
+	
+	<query name="find_post_new">
+		<![CDATA[FROM MiniPostModel e WHERE e.deleted = 0 ORDER BY e.ctime DESC]]>
+	</query>
+</hibernate-mapping>
