@@ -13,7 +13,6 @@ public class PropertiesUtil {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
 	private static final Properties pros_msg = new Properties();
-	private static final Properties pros_business = new Properties();
 	private static final Properties pros_property = new Properties();
 
 	/**
@@ -25,10 +24,6 @@ public class PropertiesUtil {
 					PropertiesUtil.class.getClassLoader().getResourceAsStream("message.properties"), "UTF-8");
 			pros_msg.load(msgReader);
 			msgReader.close();
-			InputStreamReader businessReader = new InputStreamReader(
-					PropertiesUtil.class.getClassLoader().getResourceAsStream("business.properties"), "UTF-8");
-			pros_business.load(businessReader);
-			businessReader.close();
 			InputStreamReader propertieReader = new InputStreamReader(
 					PropertiesUtil.class.getClassLoader().getResourceAsStream("property.properties"), "UTF-8");
 			pros_property.load(propertieReader);
@@ -46,10 +41,6 @@ public class PropertiesUtil {
 			}
 		}
 		return properties;
-	}
-	
-	public static String getBusinessProperty(String key){
-		return pros_business.getProperty(key);
 	}
 	
 	public static HashMap<String, String> getPropertyProperty(String key){
