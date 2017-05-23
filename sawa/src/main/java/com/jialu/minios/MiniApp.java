@@ -4,7 +4,9 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.AbstractDAO;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
@@ -69,6 +71,12 @@ public class MiniApp extends Application<MiniConfiguration> {
 		bootstrap.addBundle(new AssetsBundle("/static", "/js", null, "js"));
 		bootstrap.addBundle(new AssetsBundle("/static", "/css", null, "css"));
 		bootstrap.addBundle(new ViewBundle<MiniConfiguration>());
+		bootstrap.addBundle(new MigrationsBundle<MiniConfiguration>(){
+	        @Override
+	        public DataSourceFactory getDataSourceFactory(MiniConfiguration configuration) {
+	            return configuration.getDatabase();
+	        }
+	    });
 	}
 
 	/*
