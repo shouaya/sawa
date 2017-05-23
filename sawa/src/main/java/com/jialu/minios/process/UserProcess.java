@@ -47,6 +47,12 @@ public class UserProcess {
 			to = "+81" + phone;
 		}
 		String code = UtilProcess.random4Code();
+		or.setCode(OpResult.OK.name());
+		MiniUserModel userM = perRegist(code, phone, config);
+		MiniUser userVO = new MiniUser();
+		userVO.setPhone(userM.getPhone());
+		userVO.setId(userM.getId());
+		or.setData(userVO);
 		try {
 			SmsProcess.sendSms(to, config.getSms().getFrom(), "酒家路注册码：" + code);
 		}catch(Exception ex){
@@ -55,12 +61,6 @@ public class UserProcess {
 			or.setMsg("send message error");
 			return or;
 		}
-		or.setCode(OpResult.OK.name());
-		MiniUserModel userM = perRegist(code, phone, config);
-		MiniUser userVO = new MiniUser();
-		userVO.setPhone(userM.getPhone());
-		userVO.setId(userM.getId());
-		or.setData(userVO);
 		return or;
 	}
 	
