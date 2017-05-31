@@ -28,7 +28,17 @@ public class MiniConfiguration extends Configuration {
 	@NotNull
 	@JsonProperty
 	private String maxPost;
-
+	
+	@Valid
+	@NotNull
+	@JsonProperty
+	private String defaultUserRole;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
+	private String defaultAdminRole;
+	
 	@Valid
 	@NotNull
 	@JsonProperty
@@ -100,4 +110,19 @@ public class MiniConfiguration extends Configuration {
 		this.maxPost = maxPost;
 	}
 
+	public String getDefaultUserRole() {
+		return defaultUserRole;
+	}
+
+	public void setDefaultUserRole(String defaultUserRole) {
+		this.defaultUserRole = defaultUserRole;
+	}
+
+	public String getDefaultAdminRole() {
+		return defaultAdminRole;
+	}
+
+	public void setDefaultAdminRole(String defaultAdminRole) {
+		this.defaultAdminRole = defaultAdminRole;
+	}
 }

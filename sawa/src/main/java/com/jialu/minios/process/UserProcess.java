@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import com.jialu.minios.dao.MiniUserDao;
 import com.jialu.minios.model.MiniUserModel;
 import com.jialu.minios.utility.MiniBean;
-import com.jialu.minios.utility.MiniConstants;
 import com.jialu.minios.utility.OpResult;
 import com.jialu.minios.vo.MiniPair;
 import com.jialu.minios.vo.MiniQuery;
@@ -47,12 +46,18 @@ public class UserProcess {
 			to = "+81" + phone;
 		}
 		String code = UtilProcess.random4Code();
+		if(config.getDebug()){
+			code = "0000";
+		}
 		or.setCode(OpResult.OK.name());
 		MiniUserModel userM = perRegist(code, phone, config);
 		MiniUser userVO = new MiniUser();
 		userVO.setPhone(userM.getPhone());
 		userVO.setId(userM.getId());
 		or.setData(userVO);
+		if(config.getDebug()){
+			return or;
+		}
 		try {
 			SmsProcess.sendSms(to, config.getSms().getFrom(), "酒家路注册码：" + code);
 		}catch(Exception ex){
@@ -79,7 +84,7 @@ public class UserProcess {
 		if(user == null){
 			user = new MiniUserModel();
 			user.setPhone(phone);
-			user.setRole(MiniConstants.ROLE_USER);
+			user.setRole(config.getDefaultUserRole());
 		}
 		user.setPass(code);
 		dao.save(user);
