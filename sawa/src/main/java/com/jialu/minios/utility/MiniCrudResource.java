@@ -7,18 +7,17 @@ import com.jialu.minios.vo.MiniQuery;
 import com.jialu.minios.vo.OperatorResult;
 import com.jialu.minios.vo.OperatorRole;
 
-public abstract class MiniCrudResource<T extends MiniModel, TD extends MiniDao<T>> extends MiniResource
-		implements MiniCrudIf<T> {
-
+public abstract class MiniCrudResource<T extends MiniModel, TD extends MiniDao<T>> extends MiniResource{
+	
+	public abstract TD getDao();
+	
+	public abstract Class<T> getModelT();
+	
 	public MiniCrudResource(MiniBean config) {
 		super(config);
 	}
-
-	public abstract TD getDao();
-	public abstract Class<T> getModelT();
-
-	@Override
-	public OperatorResult<T> getById(OperatorRole principal, Integer id) {
+	
+	public OperatorResult<T> _getById(Integer id) {
 		OperatorResult<T> or = new OperatorResult<T>();
 		try{
 			or.setCode(OpResult.OK.name());
@@ -30,9 +29,8 @@ public abstract class MiniCrudResource<T extends MiniModel, TD extends MiniDao<T
 		}
 		return or;
 	}
-
-	@Override
-	public OperatorResult<T> getByQuery(OperatorRole principal, MiniQuery query) {
+	
+	public OperatorResult<T> _getByQuery(MiniQuery query) {
 		OperatorResult<T> or = new OperatorResult<T>();
 		try{
 			or.setCode(OpResult.OK.name());
@@ -45,8 +43,7 @@ public abstract class MiniCrudResource<T extends MiniModel, TD extends MiniDao<T
 		return or;
 	}
 
-	@Override
-	public OperatorResult<T> delete(OperatorRole principal, Integer id) {
+	public OperatorResult<T> _delete(OperatorRole role, Integer id) {
 		OperatorResult<T> or = new OperatorResult<T>();
 		try{
 			or.setCode(OpResult.OK.name());
@@ -55,7 +52,7 @@ public abstract class MiniCrudResource<T extends MiniModel, TD extends MiniDao<T
 				or.setCode(OpResult.ERROR.name());
 				or.setMsg("data not found");
 			} else {
-				data.setUuser(principal.getUser().getId());
+				data.setUuser(role.getUser().getId());
 				getDao().delete(data);
 				or.setData(data);
 			}
@@ -67,15 +64,14 @@ public abstract class MiniCrudResource<T extends MiniModel, TD extends MiniDao<T
 		return or;
 	}
 
-	@Override
-	public OperatorResult<T> save(OperatorRole principal, T json) {
+	public OperatorResult<T> _save(OperatorRole role, T json) {
 		OperatorResult<T> or = new OperatorResult<T>();
 		try{
 			or.setCode(OpResult.OK.name());
 			if(json.getId() == null || json.getId() == 0){
-				json.setCuser(principal.getUser().getId());
+				json.setCuser(role.getUser().getId());
 			}else{
-				json.setUuser(principal.getUser().getId());
+				json.setUuser(role.getUser().getId());
 			}
 			or.setData(getDao().save(json));
 		}catch(org.hibernate.MappingException ex){
@@ -94,8 +90,7 @@ public abstract class MiniCrudResource<T extends MiniModel, TD extends MiniDao<T
 		return or;
 	}
 
-	@Override
-	public OperatorResult<List<T>> list(OperatorRole principal, MiniQuery query) {
+	public OperatorResult<List<T>> _list(MiniQuery query) {
 		OperatorResult<List<T>> or = new OperatorResult<List<T>>();
 		try{
 			or.setCode(OpResult.OK.name());
