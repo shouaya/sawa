@@ -14,16 +14,16 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jialu.minios.base.model.MiniUserModel;
 import com.jialu.minios.base.process.ChatProcess;
 import com.jialu.minios.vo.WsMsg;
-import com.jialu.minios.vo.WsUser;
 
 @WebSocket
 public class MiniChatSocket {
 
 	private Session session;
 
-	private WsUser user;
+	private MiniUserModel user;
 	
 	private ObjectMapper mapper = new ObjectMapper();
 
@@ -60,11 +60,11 @@ public class MiniChatSocket {
 		return this.session;
 	}
 
-	public WsUser getUser() {
+	public MiniUserModel getUser() {
 		return user;
 	}
 
-	public void setUser(WsUser user) {
+	public void setUser(MiniUserModel user) {
 		this.user = user;
 	}
 }

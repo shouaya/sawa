@@ -42,7 +42,7 @@ public class MiniAuthenticator implements Authenticator<OperatorCredentials, Ope
 			MiniUserModel user = UserProcess.findByIdAndToken(userDao, credentials.getUid(), credentials.getToken());
 
 			if (user != null) {
-				OperatorRole or = new OperatorRole(user.getName());
+				OperatorRole or = new OperatorRole(user.getPhone());
 				or.setUser(user);
 				or.setRole(user.getRole());
 				return Optional.of(or);

@@ -12,12 +12,12 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Cookie;
 import com.codahale.metrics.annotation.Timed;
+import com.jialu.minios.base.model.MiniUserModel;
 import com.jialu.minios.base.process.UserProcess;
 import com.jialu.minios.utility.MiniBean;
 import com.jialu.minios.utility.MiniConstants;
 import com.jialu.minios.utility.MiniResource;
 import com.jialu.minios.utility.OpResult;
-import com.jialu.minios.vo.MiniUser;
 import com.jialu.minios.vo.OperatorResult;
 import io.dropwizard.hibernate.UnitOfWork;
 
@@ -33,8 +33,8 @@ public class CustOption extends MiniResource {
 	@Path("/get_code")
 	@UnitOfWork
 	@Produces(MediaType.APPLICATION_JSON)
-	public OperatorResult<MiniUser> getCode(@QueryParam("phone") String phone) {
-		OperatorResult<MiniUser> msg = new OperatorResult<MiniUser>();
+	public OperatorResult<MiniUserModel> getCode(@QueryParam("phone") String phone) {
+		OperatorResult<MiniUserModel> msg = new OperatorResult<MiniUserModel>();
 		try {
 			msg = UserProcess.sendResgistCode(phone, config);
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -51,7 +51,7 @@ public class CustOption extends MiniResource {
 	@UnitOfWork
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response regist(@QueryParam("phone") String phone, @QueryParam("code") String code) {
-		OperatorResult<MiniUser> msg = new OperatorResult<MiniUser>();
+		OperatorResult<MiniUserModel> msg = new OperatorResult<MiniUserModel>();
 		try {
 			msg = UserProcess.regist(phone, code, config);
 		} catch (IllegalAccessException | InvocationTargetException e) {

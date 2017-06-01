@@ -16,10 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import com.jialu.minios.base.dao.MiniUserDao;
 import com.jialu.minios.base.model.MiniUserModel;
-import com.jialu.minios.base.process.ChatProcess;
 import com.jialu.minios.base.process.UserProcess;
 import com.jialu.minios.utility.MiniBean;
-import com.jialu.minios.vo.WsUser;
 
 import io.dropwizard.hibernate.UnitOfWork;
 
@@ -65,8 +63,7 @@ public class MiniSocketCreator implements WebSocketCreator {
 				resp.sendForbidden("no line cookie");
 				return null;
 			}
-			WsUser userVo = ChatProcess.mappingUser(user);
-			socket.setUser(userVo);
+			socket.setUser(user);
 		} catch (IOException e) {
 			LOGGER.error("createWebSocket", e);
 			return null;

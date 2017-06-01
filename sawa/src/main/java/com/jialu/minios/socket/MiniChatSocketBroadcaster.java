@@ -6,9 +6,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jialu.minios.base.model.MiniUserModel;
 import com.jialu.minios.base.process.ChatProcess;
 import com.jialu.minios.vo.WsMsg;
-import com.jialu.minios.vo.WsUser;
 
 public class MiniChatSocketBroadcaster {
 	private static MiniChatSocketBroadcaster INSTANCE = new MiniChatSocketBroadcaster();
@@ -72,8 +72,8 @@ public class MiniChatSocketBroadcaster {
 	/**
 	 * @return
 	 */
-	private List<WsUser> getLive(Integer self) {
-		List<WsUser> live = new ArrayList<WsUser>();
+	private List<MiniUserModel> getLive(Integer self) {
+		List<MiniUserModel> live = new ArrayList<MiniUserModel>();
 		for (Integer uid : clients.keySet()) {
 			if(uid == self){
 				continue;

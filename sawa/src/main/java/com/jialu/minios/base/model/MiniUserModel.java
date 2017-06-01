@@ -27,19 +27,13 @@ public class MiniUserModel extends MiniModel{
 	 */
 	@Column(unique = true, nullable = false)
 	private java.lang.String phone;
-		
-    /**
+
+	/**
 	 * トークン
 	 */
 	@JsonIgnore
 	@Column(unique = false, nullable = true)
 	private java.lang.String token;
-		
-    /**
-	 * 名前
-	 */
-	@Column(unique = false, nullable = true)
-	private java.lang.String name;
 		
     /**
 	 * パスワード
@@ -54,16 +48,4 @@ public class MiniUserModel extends MiniModel{
 	@JsonIgnore
 	@Column(unique = false, nullable = true)
 	private java.lang.String role;
-		
-    /**
-	 * ヘッド
-	 */
-	@Column(unique = false, nullable = true)
-	private java.lang.String avatar;
-		
-    /**
-	 * 紹介
-	 */
-	@Column(unique = false, nullable = true)
-	private java.lang.String title;
 }

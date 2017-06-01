@@ -13,13 +13,12 @@ import com.jialu.minios.utility.MiniBean;
 import com.jialu.minios.utility.OpResult;
 import com.jialu.minios.vo.MiniPair;
 import com.jialu.minios.vo.MiniQuery;
-import com.jialu.minios.vo.MiniUser;
 import com.jialu.minios.vo.OperatorResult;
 
 public class UserProcess {
 	
-	public static OperatorResult<MiniUser> sendResgistCode(String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException {
-		OperatorResult<MiniUser> or = new OperatorResult<MiniUser>();
+	public static OperatorResult<MiniUserModel> sendResgistCode(String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException {
+		OperatorResult<MiniUserModel> or = new OperatorResult<MiniUserModel>();
 		if(phone == null){
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("phone number is empty");
@@ -47,10 +46,7 @@ public class UserProcess {
 		}
 		or.setCode(OpResult.OK.name());
 		MiniUserModel userM = perRegist(code, phone, config);
-		MiniUser userVO = new MiniUser();
-		userVO.setPhone(userM.getPhone());
-		userVO.setId(userM.getId());
-		or.setData(userVO);
+		or.setData(userM);
 		if(config.getDebug()){
 			return or;
 		}
@@ -84,8 +80,8 @@ public class UserProcess {
 		return user;
 	}
 
-	public static OperatorResult<MiniUser> regist(String phone, String code, MiniBean config) throws IllegalAccessException, InvocationTargetException {
-		OperatorResult<MiniUser> or = new OperatorResult<MiniUser>();
+	public static OperatorResult<MiniUserModel> regist(String phone, String code, MiniBean config) throws IllegalAccessException, InvocationTargetException {
+		OperatorResult<MiniUserModel> or = new OperatorResult<MiniUserModel>();
 		if(phone == null || code == null){
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("phone or code is empty");
@@ -106,15 +102,7 @@ public class UserProcess {
 		user.setToken(DigestUtils.sha1Hex(phone + config.getName() + System.currentTimeMillis()));
 		dao.save(user);
 		or.setCode(OpResult.OK.name());
-		MiniUser userVO = new MiniUser();
-		userVO.setId(user.getId());
-		userVO.setPhone(user.getPhone());
-		userVO.setToken(user.getToken());
-		userVO.setPass(user.getPass());
-		userVO.setName(user.getName());
-		userVO.setTitle(user.getTitle());
-		userVO.setAvatar(user.getAvatar());
-		or.setData(userVO);
+		or.setData(user);
 		return or;
 	}
 	
