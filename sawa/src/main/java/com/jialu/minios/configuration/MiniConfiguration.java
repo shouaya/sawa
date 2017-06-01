@@ -53,6 +53,11 @@ public class MiniConfiguration extends Configuration {
 	@NotNull
 	@JsonProperty
 	private String packageResource;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
+	private String packageApi;
 		
 	@Valid
 	@NotNull
@@ -150,5 +155,13 @@ public class MiniConfiguration extends Configuration {
 
 	public void setPackageResource(String packageResource) {
 		this.packageResource = packageResource;
+	}
+
+	public String getPackageApi() {
+		return packageApi;
+	}
+
+	public void setPackageApi(String packageApi) {
+		this.packageApi = packageApi;
 	}
 }
