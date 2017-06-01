@@ -10,7 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import com.jialu.minios.process.UtilProcess;
+import com.jialu.minios.base.process.UtilProcess;
 import com.jialu.minios.vo.MiniPair;
 import com.jialu.minios.vo.MiniQuery;
 

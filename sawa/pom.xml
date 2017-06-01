@@ -107,11 +107,6 @@
             <artifactId>websocket-client</artifactId>
             <version>${jetty.version}</version>
         </dependency>
-        <dependency>
-		    <groupId>com.amazonaws</groupId>
-		    <artifactId>aws-java-sdk</artifactId>
-		    <version>1.11.93</version>
-		</dependency>
 		<dependency>
 		    <groupId>commons-beanutils</groupId>
 		    <artifactId>commons-beanutils</artifactId>

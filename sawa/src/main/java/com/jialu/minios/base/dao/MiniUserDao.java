@@ -1,8 +1,8 @@
-package com.jialu.minios.dao;
+package com.jialu.minios.base.dao;
 
 import org.hibernate.SessionFactory;
 
-import com.jialu.minios.model.MiniUserModel;
+import com.jialu.minios.base.model.MiniUserModel;
 import com.jialu.minios.utility.MiniDao;
 
 public class MiniUserDao extends MiniDao<MiniUserModel> {

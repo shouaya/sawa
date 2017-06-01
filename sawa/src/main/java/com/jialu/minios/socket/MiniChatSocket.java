@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jialu.minios.process.ChatProcess;
+import com.jialu.minios.base.process.ChatProcess;
 import com.jialu.minios.vo.WsMsg;
 import com.jialu.minios.vo.WsUser;
 

@@ -11,6 +11,11 @@ public class SmsConfiguration {
 	@Valid
 	@NotNull
 	@JsonProperty
+	private String name;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
 	private String key;
 	
 	@Valid
@@ -52,6 +57,12 @@ public class SmsConfiguration {
 	}
 	public void setSid(String sid) {
 		this.sid = sid;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

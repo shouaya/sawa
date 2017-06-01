@@ -1,4 +1,4 @@
-package com.jialu.minios.process;
+package com.jialu.minios.base.process;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -6,11 +6,9 @@ import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.jialu.minios.dao.MiniUserDao;
-import com.jialu.minios.model.MiniUserModel;
+import com.jialu.minios.base.dao.MiniUserDao;
+import com.jialu.minios.base.model.MiniUserModel;
 import com.jialu.minios.utility.MiniBean;
 import com.jialu.minios.utility.OpResult;
 import com.jialu.minios.vo.MiniPair;
@@ -20,8 +18,6 @@ import com.jialu.minios.vo.OperatorResult;
 
 public class UserProcess {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserProcess.class);
-
 	public static OperatorResult<MiniUser> sendResgistCode(String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException {
 		OperatorResult<MiniUser> or = new OperatorResult<MiniUser>();
 		if(phone == null){
@@ -58,13 +54,10 @@ public class UserProcess {
 		if(config.getDebug()){
 			return or;
 		}
-		try {
-			SmsProcess.sendSms(to, config.getSms().getFrom(), "酒家路注册码：" + code);
-		}catch(Exception ex){
-			LOGGER.error("sendResgistCode ", ex);
+		String mid = config.sendSms(to, "酒家路注册码：" + code);
+		if(mid == null){
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("send message error");
-			return or;
 		}
 		return or;
 	}

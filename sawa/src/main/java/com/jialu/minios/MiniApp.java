@@ -23,11 +23,10 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.hibernate.SessionFactory;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.google.common.reflect.ClassPath;
+import com.jialu.minios.base.dao.MiniUserDao;
+import com.jialu.minios.base.resource.AdmOption;
+import com.jialu.minios.base.resource.CustOption;
 import com.jialu.minios.configuration.MiniConfiguration;
 import com.jialu.minios.socket.MiniChatSocketServlet;
 import com.jialu.minios.utility.MiniAuthenticator;
@@ -40,11 +39,11 @@ import com.twilio.Twilio;
 
 public class MiniApp extends Application<MiniConfiguration> {
 
-	private final MiniHibernateBundle hibernate = new MiniHibernateBundle();
-
 	private final ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
 	private final MiniBean bean = new MiniBean();
+	
+	private MiniHibernateBundle hibernate;
 
 	public static void main(String[] args) throws Exception {
 		new MiniApp().run(args);
@@ -67,7 +66,6 @@ public class MiniApp extends Application<MiniConfiguration> {
 	 */
 	@Override
 	public void initialize(Bootstrap<MiniConfiguration> bootstrap) {
-		bootstrap.addBundle(hibernate);
 		bootstrap.addBundle(new AssetsBundle("/static", "/js", null, "js"));
 		bootstrap.addBundle(new AssetsBundle("/static", "/css", null, "css"));
 		bootstrap.addBundle(new ViewBundle<MiniConfiguration>());
@@ -77,6 +75,14 @@ public class MiniApp extends Application<MiniConfiguration> {
 	            return configuration.getDatabase();
 	        }
 	    });
+		final MiniHibernateBundle hibernate = new MiniHibernateBundle(){
+			@Override
+	        public String getPackageDao(MiniConfiguration configuration) {
+	            return configuration.getPackageDao();
+	        }
+		};
+		bootstrap.addBundle(hibernate);
+		this.hibernate = hibernate;
 	}
 
 	/*
@@ -89,11 +95,10 @@ public class MiniApp extends Application<MiniConfiguration> {
 	public void run(MiniConfiguration configuration, Environment environment)
 			throws IOException, InstantiationException, IllegalAccessException, NoSuchMethodException,
 			SecurityException, IllegalArgumentException, InvocationTargetException {
-
 		setConfig(configuration);
 		setService(configuration);
-		loadAllDao(hibernate.getSessionFactory());
-		registerApi(environment);
+		loadAllDao(configuration, hibernate.getSessionFactory());
+		registerApi(configuration, environment);
 
 	}
 
@@ -109,14 +114,7 @@ public class MiniApp extends Application<MiniConfiguration> {
 	/**
 	 * @param configuration
 	 */
-	@SuppressWarnings({ "deprecation" })
 	private void setService(MiniConfiguration configuration) {
-		// amazons3
-		AWSCredentials credentials = new BasicAWSCredentials(configuration.getAmazons3().getAppId(),
-				configuration.getAmazons3().getAppSecret());
-		final AmazonS3 s3client = new AmazonS3Client(credentials);
-		bean.setAmazonS3Service(s3client);
-
 		// twilio SMS
 		Twilio.init(configuration.getSms().getSid(), configuration.getSms().getToken());
 	}
@@ -131,14 +129,16 @@ public class MiniApp extends Application<MiniConfiguration> {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 */
-	private void loadAllDao(SessionFactory factory) throws IOException, NoSuchMethodException, SecurityException,
+	private void loadAllDao(MiniConfiguration configuration, SessionFactory factory) throws IOException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Set<Class<?>> allClasses = ClassPath.from(loader).getTopLevelClasses(MiniConstants.DAO_PACKAGE).stream()
+		Set<Class<?>> allClasses = ClassPath.from(loader).getTopLevelClasses(configuration.getPackageDao()).stream()
 				.map(info -> info.load()).collect(Collectors.toSet());
 		for (Class<?> resource : allClasses) {
 			Constructor<?> cs = resource.getDeclaredConstructor(new Class[] { SessionFactory.class });
 			bean.getDaoList().put(resource.getName(), (AbstractDAO<?>) cs.newInstance(factory));
 		}
+		//load base dao
+		bean.getDaoList().put(MiniUserDao.class.getName(), new MiniUserDao(factory));
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class MiniApp extends Application<MiniConfiguration> {
 	 * @throws InvocationTargetException
 	 * @throws IOException
 	 */
-	private void registerApi(Environment environment) throws InstantiationException, IllegalAccessException,
+	private void registerApi(MiniConfiguration configuration, Environment environment) throws InstantiationException, IllegalAccessException,
 			NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException, IOException {
 		// providers
 		environment.jersey().register(MultiPartFeature.class);
@@ -165,7 +165,7 @@ public class MiniApp extends Application<MiniConfiguration> {
 		environment.healthChecks().register(this.getName(), healthCheck);
 
 		// resources
-		registerAllResources(environment, MiniConstants.RESOURCE_PACKAGE);
+		registerAllResources(environment, configuration.getPackageResource());
 
 		// authorization
 		environment.jersey()
@@ -203,5 +203,8 @@ public class MiniApp extends Application<MiniConfiguration> {
 			Constructor<?> cs = resource.getDeclaredConstructor(new Class[] { MiniBean.class });
 			environment.jersey().register(cs.newInstance(bean));
 		}
+		//load base resource
+		environment.jersey().register(new AdmOption(bean));
+		environment.jersey().register(new CustOption(bean));
 	}
 }

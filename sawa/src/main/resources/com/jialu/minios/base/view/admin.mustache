@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="shortcut icon" href="https://api.9jialu.com/app/favicon.ico" />
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
+<title>{{page.page_title}}</title>
+{{#isDebug}}
+  <link href="/css/main.css" rel="stylesheet">
+{{/isDebug}}
+{{^isDebug}}
+  <link href="https://api.9jialu.com/app/main.css" rel="stylesheet">
+{{/isDebug}}
+</head>
+<body>
+	<div id="root"></div>
+	{{#isDebug}}
+	  <script type="text/javascript" src="/js/main.js"></script>
+	{{/isDebug}}
+	{{^isDebug}}
+	  <script type="text/javascript" src="https://api.9jialu.com/app/main.js"></script>
+	{{/isDebug}}
+</body>
+</html>

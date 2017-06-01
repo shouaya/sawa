@@ -10,9 +10,9 @@ import org.hibernate.context.internal.ManagedSessionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jialu.minios.dao.MiniUserDao;
-import com.jialu.minios.model.MiniUserModel;
-import com.jialu.minios.process.UserProcess;
+import com.jialu.minios.base.dao.MiniUserDao;
+import com.jialu.minios.base.model.MiniUserModel;
+import com.jialu.minios.base.process.UserProcess;
 import com.jialu.minios.vo.OperatorCredentials;
 import com.jialu.minios.vo.OperatorRole;
 

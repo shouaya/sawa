@@ -2,7 +2,8 @@ package com.jialu.minios.vo;
 
 import java.security.Principal;
 
-import com.jialu.minios.model.MiniUserModel;
+import com.jialu.minios.base.model.MiniUserModel;
+
 
 public class OperatorRole implements Principal{
 	private MiniUserModel user;

@@ -42,12 +42,22 @@ public class MiniConfiguration extends Configuration {
 	@Valid
 	@NotNull
 	@JsonProperty
-	private Boolean debug;
+	private String packageDao;
 	
 	@Valid
 	@NotNull
 	@JsonProperty
-	private AmazonS3Configuration amazons3 = new AmazonS3Configuration();
+	private String packageModel;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
+	private String packageResource;
+		
+	@Valid
+	@NotNull
+	@JsonProperty
+	private Boolean debug;
 	
 	@Valid
 	@NotNull
@@ -86,14 +96,6 @@ public class MiniConfiguration extends Configuration {
 		this.host = host;
 	}
 
-	public AmazonS3Configuration getAmazons3() {
-		return amazons3;
-	}
-
-	public void setAmazons3(AmazonS3Configuration amazons3) {
-		this.amazons3 = amazons3;
-	}
-
 	public SmsConfiguration getSms() {
 		return sms;
 	}
@@ -124,5 +126,29 @@ public class MiniConfiguration extends Configuration {
 
 	public void setDefaultAdminRole(String defaultAdminRole) {
 		this.defaultAdminRole = defaultAdminRole;
+	}
+
+	public String getPackageDao() {
+		return packageDao;
+	}
+
+	public void setPackageDao(String packageDao) {
+		this.packageDao = packageDao;
+	}
+
+	public String getPackageModel() {
+		return packageModel;
+	}
+
+	public void setPackageModel(String packageModel) {
+		this.packageModel = packageModel;
+	}
+
+	public String getPackageResource() {
+		return packageResource;
+	}
+
+	public void setPackageResource(String packageResource) {
+		this.packageResource = packageResource;
 	}
 }

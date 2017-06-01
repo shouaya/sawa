@@ -1,4 +1,4 @@
-package com.jialu.minios.model;
+package com.jialu.minios.base.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -22,7 +22,7 @@ public class MiniUserModel extends MiniModel{
 
 	private static final long serialVersionUID = 1L;
 	
-    /**
+	/**
 	 * 電話番号
 	 */
 	@Column(unique = true, nullable = false)

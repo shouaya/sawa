@@ -1,8 +1,8 @@
-package com.jialu.minios.process;
+package com.jialu.minios.base.process;
 
 import java.sql.Timestamp;
 
-import com.jialu.minios.model.MiniUserModel;
+import com.jialu.minios.base.model.MiniUserModel;
 import com.jialu.minios.vo.WsMsg;
 import com.jialu.minios.vo.WsUser;
 

@@ -14,12 +14,14 @@ import io.dropwizard.hibernate.SessionFactoryFactory;
 public class MiniHibernateBundle extends HibernateBundle<MiniConfiguration>
 		implements ConfiguredBundle<MiniConfiguration> {
 
+	private static String daoPackage;
+	
 	public MiniHibernateBundle() {
-		super(getEntities(MiniConstants.MODEL_PACKAGE), new SessionFactoryFactory());
+		super(getEntities(), new SessionFactoryFactory());
 	}
 
-	private static ImmutableList<Class<?>> getEntities(String pageName) {
-		Reflections reflections = new Reflections(pageName);
+	private static ImmutableList<Class<?>> getEntities() {
+		Reflections reflections = new Reflections(daoPackage);
 		ImmutableList<Class<?>> entities = ImmutableList.copyOf(reflections.getTypesAnnotatedWith(Entity.class));
 		return entities;
 	}
@@ -34,5 +36,13 @@ public class MiniHibernateBundle extends HibernateBundle<MiniConfiguration>
 		configuration.addResource("query.xml");
 		configuration.addResource("crud.xml");
 	}
+	
+	public void setDaoPackage(String daoPackage){
+		MiniHibernateBundle.daoPackage = daoPackage;
+	}
 
+	public String getPackageDao(MiniConfiguration configuration) {
+		MiniHibernateBundle.daoPackage = configuration.getPackageDao();
+		return MiniHibernateBundle.daoPackage;
+	}
 }

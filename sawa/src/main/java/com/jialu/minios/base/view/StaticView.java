@@ -1,4 +1,4 @@
-package com.jialu.minios.view;
+package com.jialu.minios.base.view;
 
 import java.util.HashMap;
 import java.util.List;

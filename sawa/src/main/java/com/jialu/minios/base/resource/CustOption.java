@@ -1,5 +1,5 @@
 
-package com.jialu.minios.resource;
+package com.jialu.minios.base.resource;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -12,7 +12,7 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Cookie;
 import com.codahale.metrics.annotation.Timed;
-import com.jialu.minios.process.UserProcess;
+import com.jialu.minios.base.process.UserProcess;
 import com.jialu.minios.utility.MiniBean;
 import com.jialu.minios.utility.MiniConstants;
 import com.jialu.minios.utility.MiniResource;
