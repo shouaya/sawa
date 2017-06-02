@@ -12,4 +12,8 @@ public abstract class MiniResource {
 	public MiniResource(MiniBean config){
 		this.config = config;
 	}
+	
+	public MiniBean getConfigBean(){
+		return this.config;
+	}
 }
