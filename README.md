@@ -15,3 +15,11 @@ package
 
     cd /d %~dp0 
     mvn package
+    
+pom.xml
+
+    <dependency>
+        <groupId>com.github.shouaya</groupId>
+        <artifactId>sawa</artifactId>
+        <version>0.0.1</version>
+    </dependency>
