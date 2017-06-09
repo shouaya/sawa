@@ -8,7 +8,13 @@ public class MiniAuthorizer implements Authorizer<OperatorRole>  {
 
 	@Override
 	public boolean authorize(OperatorRole principal, String role) {
-		return principal.getRole().toLowerCase().equals(role.toLowerCase());
+		String[] roles = role.split(",");
+		for(String r : roles){
+			if(principal.getRole().toLowerCase().equals(r.toLowerCase())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
