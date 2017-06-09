@@ -9,14 +9,12 @@ dependencies
     postgresql:9.1
     jetty:9.3
     twilio:7.0
-    awss3:1.11.93
 
-package
+you can package by yourself
 
-    cd /d %~dp0 
     mvn package
     
-pom.xml
+or use maven dependency in pom.xml
 
     <dependency>
         <groupId>com.github.shouaya</groupId>
