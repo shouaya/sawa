@@ -19,5 +19,7 @@ or use maven dependency in pom.xml
     <dependency>
         <groupId>com.github.shouaya</groupId>
         <artifactId>sawa</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
     </dependency>
+
+https://oss.sonatype.org/#stagingRepositories
