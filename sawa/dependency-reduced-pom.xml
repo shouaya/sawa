@@ -4,7 +4,7 @@
   <groupId>com.github.shouaya</groupId>
   <artifactId>sawa</artifactId>
   <name>sawa</name>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <description>rest api base package</description>
   <url>https://github.com/shouaya/sawa</url>
   <developers>
