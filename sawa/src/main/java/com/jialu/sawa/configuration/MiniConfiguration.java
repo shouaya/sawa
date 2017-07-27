@@ -67,6 +67,11 @@ public class MiniConfiguration extends Configuration {
 	@Valid
 	@NotNull
 	@JsonProperty
+	private Boolean chatable;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
 	private SmsConfiguration sms = new SmsConfiguration();
 
 	public String getName() {
@@ -163,5 +168,13 @@ public class MiniConfiguration extends Configuration {
 
 	public void setPackageApi(String packageApi) {
 		this.packageApi = packageApi;
+	}
+
+	public Boolean getChatable() {
+		return chatable;
+	}
+
+	public void setChatable(Boolean chatable) {
+		this.chatable = chatable;
 	}
 }

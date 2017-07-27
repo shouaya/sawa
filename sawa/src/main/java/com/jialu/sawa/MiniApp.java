@@ -175,12 +175,14 @@ public class MiniApp extends Application<MiniConfiguration> {
 		environment.jersey().register(RolesAllowedDynamicFeature.class);
 		environment.jersey().register(new AuthValueFactoryProvider.Binder<>(OperatorRole.class));
 
-		// websocket
-		final MiniChatSocketServlet socketServlet = new MiniChatSocketServlet(bean, hibernate.getSessionFactory());
-		final ServletRegistration.Dynamic websocket = environment.servlets().addServlet(MiniConstants.WEBSOCKET_PATH,
-				socketServlet);
-		websocket.setAsyncSupported(true);
-		websocket.addMapping(String.format("/%s/*", MiniConstants.WEBSOCKET_PATH));
+		if(configuration.getChatable()) {
+			// websocket
+			final MiniChatSocketServlet socketServlet = new MiniChatSocketServlet(bean, hibernate.getSessionFactory());
+			final ServletRegistration.Dynamic websocket = environment.servlets().addServlet(MiniConstants.WEBSOCKET_PATH,
+					socketServlet);
+			websocket.setAsyncSupported(true);
+			websocket.addMapping(String.format("/%s/*", MiniConstants.WEBSOCKET_PATH));
+		}
 	}
 
 	/**
