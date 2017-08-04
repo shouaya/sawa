@@ -27,6 +27,7 @@ import com.google.common.reflect.ClassPath;
 import com.jialu.sawa.base.dao.MiniUserDao;
 import com.jialu.sawa.base.resource.AdmOption;
 import com.jialu.sawa.base.resource.CustOption;
+import com.jialu.sawa.base.resource.GustOption;
 import com.jialu.sawa.configuration.MiniConfiguration;
 import com.jialu.sawa.socket.MiniChatSocketServlet;
 import com.jialu.sawa.utility.MiniAuthenticator;
@@ -208,5 +209,6 @@ public class MiniApp extends Application<MiniConfiguration> {
 		//load base resource
 		environment.jersey().register(new AdmOption(bean));
 		environment.jersey().register(new CustOption(bean));
+		environment.jersey().register(new GustOption(bean));
 	}
 }

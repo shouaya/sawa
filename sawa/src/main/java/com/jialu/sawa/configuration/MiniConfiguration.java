@@ -27,6 +27,16 @@ public class MiniConfiguration extends Configuration {
 	@Valid
 	@NotNull
 	@JsonProperty
+	private String cuscss;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
+	private String cusjs;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
 	private String maxPost;
 	
 	@Valid
@@ -176,5 +186,21 @@ public class MiniConfiguration extends Configuration {
 
 	public void setChatable(Boolean chatable) {
 		this.chatable = chatable;
+	}
+
+	public String getCuscss() {
+		return cuscss;
+	}
+
+	public void setCuscss(String cuscss) {
+		this.cuscss = cuscss;
+	}
+
+	public String getCusjs() {
+		return cusjs;
+	}
+
+	public void setCusjs(String cusjs) {
+		this.cusjs = cusjs;
 	}
 }
