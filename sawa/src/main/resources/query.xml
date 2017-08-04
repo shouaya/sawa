@@ -11,7 +11,4 @@
 		<![CDATA[FROM MiniUserModel e WHERE e.phone = :phone and e.token = :token ORDER BY e.id]]>
 	</query>
 	
-	<query name="find_post_new">
-		<![CDATA[FROM MiniPostModel e WHERE e.deleted = 0 ORDER BY e.ctime DESC]]>
-	</query>
 </hibernate-mapping>
