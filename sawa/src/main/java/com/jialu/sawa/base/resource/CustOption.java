@@ -62,7 +62,7 @@ public class CustOption extends MiniResource {
 		}
 		if (msg.getCode().equals(OpResult.OK.name())) {
 			String host = config.getDebug() ? MiniConstants.DEBUG_HOST : config.getHost();
-			Boolean secure =  !config.getDebug();
+			Boolean secure =  config.getSecure();
 			Cookie cookieUid = new Cookie("uid", msg.getData().getPhone(), "/", host);
 			Cookie cookieToken = new Cookie("token", msg.getData().getToken(), "/", host);
 			NewCookie cookieU = new NewCookie(cookieUid, null, 86400 * 100, null, secure,

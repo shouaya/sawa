@@ -33,6 +33,11 @@ public class MiniConfiguration extends Configuration {
 	@NotNull
 	@JsonProperty
 	private String cusjs;
+
+	@Valid
+	@NotNull
+	@JsonProperty
+	private Boolean secure;
 	
 	@Valid
 	@NotNull
@@ -202,5 +207,13 @@ public class MiniConfiguration extends Configuration {
 
 	public void setCusjs(String cusjs) {
 		this.cusjs = cusjs;
+	}
+
+	public Boolean getSecure() {
+		return secure;
+	}
+
+	public void setSecure(Boolean secure) {
+		this.secure = secure;
 	}
 }
