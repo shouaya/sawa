@@ -47,6 +47,11 @@ public class MiniConfiguration extends Configuration {
 	@Valid
 	@NotNull
 	@JsonProperty
+	private String search;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
 	private String defaultUserRole;
 	
 	@Valid
@@ -215,5 +220,13 @@ public class MiniConfiguration extends Configuration {
 
 	public void setSecure(Boolean secure) {
 		this.secure = secure;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
 	}
 }
