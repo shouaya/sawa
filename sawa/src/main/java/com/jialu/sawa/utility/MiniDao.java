@@ -26,7 +26,7 @@ public abstract class MiniDao<T extends MiniModel> extends AbstractDAO<T> {
 		return get(id);
 	}
 
-	public T save(T entity) throws IllegalAccessException, InvocationTargetException {
+	public T save(T entity) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		if (entity.getId() == null || entity.getId() == 0) {
 			entity.setId(null);
 			if(entity.getCuser() == null){
@@ -42,8 +42,7 @@ public abstract class MiniDao<T extends MiniModel> extends AbstractDAO<T> {
 		}
 
 		T exsit = findById(entity.getId());
-		MiniCopyBean copyBean = new MiniCopyBean();
-		copyBean.copyProperties(exsit, entity);
+		UtilProcess.copyModel(exsit, entity);
 		if(entity.getUuser() == null){
 			entity.setUuser(0);
 		}

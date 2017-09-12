@@ -17,7 +17,7 @@ import com.jialu.sawa.vo.OperatorResult;
 
 public class UserProcess {
 	
-	public static OperatorResult<MiniUserModel> sendResgistCode(String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException {
+	public static OperatorResult<MiniUserModel> sendResgistCode(String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		OperatorResult<MiniUserModel> or = new OperatorResult<MiniUserModel>();
 		if(phone == null){
 			or.setCode(OpResult.ERROR.name());
@@ -67,7 +67,7 @@ public class UserProcess {
 		return dao.findOneByQuery(query);
 	}
 	
-	private static MiniUserModel perRegist(String code, String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException{	
+	private static MiniUserModel perRegist(String code, String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{	
 		MiniUserDao dao = config.getDao(MiniUserDao.class);
 		MiniUserModel user = getUserByPhone(dao, phone);
 		if(user == null){
@@ -80,7 +80,7 @@ public class UserProcess {
 		return user;
 	}
 
-	public static OperatorResult<MiniUserModel> regist(String phone, String code, MiniBean config) throws IllegalAccessException, InvocationTargetException {
+	public static OperatorResult<MiniUserModel> regist(String phone, String code, MiniBean config) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		OperatorResult<MiniUserModel> or = new OperatorResult<MiniUserModel>();
 		if(phone == null || code == null){
 			or.setCode(OpResult.ERROR.name());

@@ -38,7 +38,7 @@ public class CustOption extends MiniResource {
 		OperatorResult<MiniUserModel> msg = new OperatorResult<MiniUserModel>();
 		try {
 			msg = UserProcess.sendResgistCode(phone, config);
-		} catch (IllegalAccessException | InvocationTargetException e) {
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 			msg.setCode(OpResult.ERROR.name());
 			msg.setMsg("getCode error");
 			LOGGER.error("getCode", e);
@@ -55,7 +55,7 @@ public class CustOption extends MiniResource {
 		OperatorResult<MiniUserModel> msg = new OperatorResult<MiniUserModel>();
 		try {
 			msg = UserProcess.regist(phone, code, config);
-		} catch (IllegalAccessException | InvocationTargetException e) {
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 			msg.setCode(OpResult.ERROR.name());
 			msg.setMsg("regist error");
 			LOGGER.error("getCode", e);

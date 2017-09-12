@@ -86,6 +86,10 @@ public abstract class MiniCrudResource<T extends MiniModel, TD extends MiniDao<T
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("save error");
 			LOGGER.error("save", ex);
+		} catch (NoSuchMethodException ex) {
+			or.setCode(OpResult.ERROR.name());
+			or.setMsg("save error");
+			LOGGER.error("save", ex);
 		}
 		return or;
 	}
