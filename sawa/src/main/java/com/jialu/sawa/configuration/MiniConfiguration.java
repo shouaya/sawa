@@ -23,16 +23,6 @@ public class MiniConfiguration extends Configuration {
 	@NotNull
 	@JsonProperty
 	private String host;
-	
-	@Valid
-	@NotNull
-	@JsonProperty
-	private String cuscss;
-	
-	@Valid
-	@NotNull
-	@JsonProperty
-	private String cusjs;
 
 	@Valid
 	@NotNull
@@ -47,7 +37,12 @@ public class MiniConfiguration extends Configuration {
 	@Valid
 	@NotNull
 	@JsonProperty
-	private String search;
+	private String elastic;
+	
+	@Valid
+	@NotNull
+	@JsonProperty
+	private String solr;
 	
 	@Valid
 	@NotNull
@@ -198,22 +193,6 @@ public class MiniConfiguration extends Configuration {
 		this.chatable = chatable;
 	}
 
-	public String getCuscss() {
-		return cuscss;
-	}
-
-	public void setCuscss(String cuscss) {
-		this.cuscss = cuscss;
-	}
-
-	public String getCusjs() {
-		return cusjs;
-	}
-
-	public void setCusjs(String cusjs) {
-		this.cusjs = cusjs;
-	}
-
 	public Boolean getSecure() {
 		return secure;
 	}
@@ -222,11 +201,19 @@ public class MiniConfiguration extends Configuration {
 		this.secure = secure;
 	}
 
-	public String getSearch() {
-		return search;
+	public String getElastic() {
+		return elastic;
 	}
 
-	public void setSearch(String search) {
-		this.search = search;
+	public void setElastic(String elastic) {
+		this.elastic = elastic;
+	}
+
+	public String getSolr() {
+		return solr;
+	}
+
+	public void setSolr(String solr) {
+		this.solr = solr;
 	}
 }

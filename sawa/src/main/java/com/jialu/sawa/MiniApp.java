@@ -1,7 +1,6 @@
 package com.jialu.sawa;
 
 import io.dropwizard.Application;
-import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.db.DataSourceFactory;
@@ -25,9 +24,7 @@ import org.hibernate.SessionFactory;
 
 import com.google.common.reflect.ClassPath;
 import com.jialu.sawa.base.dao.MiniUserDao;
-import com.jialu.sawa.base.resource.AdmOption;
 import com.jialu.sawa.base.resource.CustOption;
-import com.jialu.sawa.base.resource.GustOption;
 import com.jialu.sawa.configuration.MiniConfiguration;
 import com.jialu.sawa.socket.MiniChatSocketServlet;
 import com.jialu.sawa.utility.MiniAuthenticator;
@@ -67,8 +64,6 @@ public class MiniApp extends Application<MiniConfiguration> {
 	 */
 	@Override
 	public void initialize(Bootstrap<MiniConfiguration> bootstrap) {
-		bootstrap.addBundle(new AssetsBundle("/static", "/js", null, "js"));
-		bootstrap.addBundle(new AssetsBundle("/static", "/css", null, "css"));
 		bootstrap.addBundle(new ViewBundle<MiniConfiguration>());
 		bootstrap.addBundle(new MigrationsBundle<MiniConfiguration>(){
 	        @Override
@@ -207,8 +202,6 @@ public class MiniApp extends Application<MiniConfiguration> {
 			environment.jersey().register(cs.newInstance(bean));
 		}
 		//load base resource
-		environment.jersey().register(new AdmOption(bean));
 		environment.jersey().register(new CustOption(bean));
-		environment.jersey().register(new GustOption(bean));
 	}
 }
