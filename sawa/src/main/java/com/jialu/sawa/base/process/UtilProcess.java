@@ -8,8 +8,8 @@ import java.util.Random;
 
 import javax.persistence.Table;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.beanutils.converters.IntegerConverter;
 
 import com.jialu.sawa.utility.MiniModel;
 import com.jialu.sawa.utility.PropertiesUtil;
@@ -77,11 +77,14 @@ public class UtilProcess {
 
 	public static void copyModel(MiniModel exsit, MiniModel entity)
 			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		IntegerConverter converter = new IntegerConverter(null); 
+		BeanUtilsBean beanUtilsBean = new BeanUtilsBean();
+		beanUtilsBean.getConvertUtils().register(converter, Integer.class);
 		Class<?> clazz = entity.getClass();
 		String table = clazz.getAnnotation(Table.class).name();
 		List<MiniMeta> metas = getPropertiesByName(table);
 		for (MiniMeta meta : metas) {
-			BeanUtils.setProperty(exsit, meta.getName(), PropertyUtils.getProperty(entity, meta.getName()));
+			beanUtilsBean.setProperty(exsit, meta.getName(), beanUtilsBean.getProperty(entity, meta.getName()));
 		}
 	}
 }
