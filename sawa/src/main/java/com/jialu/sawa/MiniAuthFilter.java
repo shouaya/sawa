@@ -53,9 +53,11 @@ public class MiniAuthFilter<P extends Principal> extends AuthFilter<OperatorCred
 
 	public static class Builder<P extends Principal>
 			extends AuthFilterBuilder<OperatorCredentials, P, MiniAuthFilter<P>> {
-
+		
 		@Override
 		protected MiniAuthFilter<P> newInstance() {
+			this.setPrefix("sawa");
+			this.setRealm("sawa-0.0.2");
 			return new MiniAuthFilter<>();
 		}
 	}
