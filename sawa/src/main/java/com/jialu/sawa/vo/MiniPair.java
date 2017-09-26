@@ -12,6 +12,8 @@ public class MiniPair {
 
 	private String key;
 	private String value;
+	private Class<?> clazz;
+	
 	public String getKey() {
 		return key;
 	}
@@ -23,5 +25,11 @@ public class MiniPair {
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+	public Class<?> getClazz() {
+		return clazz;
+	}
+	public void setClazz(Class<?> clazz) {
+		this.clazz = clazz;
 	}
 }

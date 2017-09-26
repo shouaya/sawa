@@ -110,7 +110,12 @@ public abstract class MiniDao<T extends MiniModel> extends AbstractDAO<T> {
 
 		if (mquery.getParams() != null) {
 			for (MiniPair param : mquery.getParams()) {
-				query.setParameter(param.getKey(), param.getValue());
+				if(param.getClazz() != null) {
+					Object value = param.getClazz().cast( param.getValue());
+					query.setParameter(param.getKey(), value);
+				}else {
+					query.setParameter(param.getKey(), param.getValue());
+				}
 			}
 		}
 
