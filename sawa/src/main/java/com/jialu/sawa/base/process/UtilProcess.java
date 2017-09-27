@@ -57,7 +57,7 @@ public class UtilProcess {
 		return null;
 	}
 
-	private static Object toObject(String name, String value) {
+	public static Object toObject(String name, String value) {
 		if (Boolean.class.getName().equals(name))
 			return Boolean.parseBoolean(value);
 		if (Byte.class.getName().equals(name))
