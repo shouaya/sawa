@@ -80,8 +80,8 @@ public abstract class MiniDao<T extends MiniModel> extends AbstractDAO<T> {
 
 		if (mquery.getLimit() == null) {
 			query.setMaxResults(maxCount);
-		} else if (mquery.getLimit() > maxCount) {
-			query.setMaxResults(maxCount);
+//		} else if (mquery.getLimit() > maxCount) {
+//			query.setMaxResults(maxCount);
 		} else {
 			query.setMaxResults(mquery.getLimit());
 		}
