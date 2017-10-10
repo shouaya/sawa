@@ -8,14 +8,11 @@ import io.dropwizard.hibernate.AbstractDAO;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.dropwizard.views.ViewBundle;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.servlet.ServletRegistration;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -26,7 +23,6 @@ import com.google.common.reflect.ClassPath;
 import com.jialu.sawa.base.dao.MiniUserDao;
 import com.jialu.sawa.base.resource.CustOption;
 import com.jialu.sawa.configuration.MiniConfiguration;
-import com.jialu.sawa.socket.MiniChatSocketServlet;
 import com.jialu.sawa.utility.MiniAuthenticator;
 import com.jialu.sawa.utility.MiniAuthorizer;
 import com.jialu.sawa.utility.MiniBean;
@@ -64,7 +60,6 @@ public class MiniApp extends Application<MiniConfiguration> {
 	 */
 	@Override
 	public void initialize(Bootstrap<MiniConfiguration> bootstrap) {
-		bootstrap.addBundle(new ViewBundle<MiniConfiguration>());
 		bootstrap.addBundle(new MigrationsBundle<MiniConfiguration>(){
 	        @Override
 	        public DataSourceFactory getDataSourceFactory(MiniConfiguration configuration) {
@@ -171,14 +166,6 @@ public class MiniApp extends Application<MiniConfiguration> {
 		environment.jersey().register(RolesAllowedDynamicFeature.class);
 		environment.jersey().register(new AuthValueFactoryProvider.Binder<>(OperatorRole.class));
 
-		if(configuration.getChatable()) {
-			// websocket
-			final MiniChatSocketServlet socketServlet = new MiniChatSocketServlet(bean, hibernate.getSessionFactory());
-			final ServletRegistration.Dynamic websocket = environment.servlets().addServlet(MiniConstants.WEBSOCKET_PATH,
-					socketServlet);
-			websocket.setAsyncSupported(true);
-			websocket.addMapping(String.format("/%s/*", MiniConstants.WEBSOCKET_PATH));
-		}
 	}
 
 	/**

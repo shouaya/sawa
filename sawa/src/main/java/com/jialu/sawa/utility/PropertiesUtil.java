@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 public class PropertiesUtil {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
-	private static final Properties pros_msg = new Properties();
 	private static final Properties pros_property = new Properties();
 
 	/**
@@ -20,29 +19,14 @@ public class PropertiesUtil {
 	 */
 	static {
 		try {
-			InputStreamReader msgReader = new InputStreamReader(
-					PropertiesUtil.class.getClassLoader().getResourceAsStream("message.properties"), "UTF-8");
-			pros_msg.load(msgReader);
-			msgReader.close();
 			InputStreamReader propertieReader = new InputStreamReader(
 					PropertiesUtil.class.getClassLoader().getResourceAsStream("property.properties"), "UTF-8");
 			pros_property.load(propertieReader);
 			propertieReader.close();
 		} catch (IOException e) {
-			LOGGER.error("message.properties error", e);
+			LOGGER.error("property.properties error", e);
 		}
 	}
-
-	public static HashMap<String, String> getMsgProperty(String key) {
-		HashMap<String, String> properties = new HashMap<String, String>();
-		for (final String name : pros_msg.stringPropertyNames()) {
-			if (name.startsWith(key)) {
-				properties.put(name.replace(key + ".", ""), pros_msg.getProperty(name));
-			}
-		}
-		return properties;
-	}
-	
 	public static HashMap<String, String> getPropertyProperty(String key){
 		HashMap<String, String> properties = new HashMap<String, String>();
 		for (final String name : pros_property.stringPropertyNames()) {
