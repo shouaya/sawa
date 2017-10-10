@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping>
+	<query name="find_user_by_phone">
+	    <![CDATA[FROM MiniUserModel e WHERE e.phone = :phone]]>
+    </query>
+
+	<query name="find_user_by_phone_and_token">
+		<![CDATA[FROM MiniUserModel e WHERE e.phone = :phone and e.token = :token]]>
+	</query>
+	
+</hibernate-mapping>

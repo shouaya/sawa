@@ -34,6 +34,7 @@ public class MiniHibernateBundle extends HibernateBundle<MiniConfiguration>
 	
 	@Override
 	protected void configure(org.hibernate.cfg.Configuration configuration){
+		configuration.addResource("base.xml");
 		configuration.addResource("query.xml");
 		configuration.addResource("crud.xml");
 	}

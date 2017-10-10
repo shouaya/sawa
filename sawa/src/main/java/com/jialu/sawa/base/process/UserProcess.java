@@ -50,7 +50,7 @@ public class UserProcess {
 		if(config.getDebug()){
 			return or;
 		}
-		String mid = config.sendSms(to, "酒家路注册码：" + code);
+		String mid = config.sendSms(to, String.format("%s code： %s", config.getName(), code));
 		if(mid == null){
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("send message error");
