@@ -45,7 +45,6 @@ public class MiniUserModel extends MiniModel{
     /**
 	 * 権限
 	 */
-	@JsonIgnore
 	@Column(unique = false, nullable = true)
 	private java.lang.String role;
 }
