@@ -3,6 +3,7 @@ package com.jialu.sawa.base.process;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -10,55 +11,61 @@ import org.apache.commons.lang3.StringUtils;
 import com.jialu.sawa.base.dao.MiniUserDao;
 import com.jialu.sawa.base.model.MiniUserModel;
 import com.jialu.sawa.utility.MiniBean;
+import com.jialu.sawa.utility.MiniModel;
 import com.jialu.sawa.utility.OpResult;
 import com.jialu.sawa.vo.MiniPair;
 import com.jialu.sawa.vo.MiniQuery;
 import com.jialu.sawa.vo.OperatorResult;
 
+
 public class UserProcess {
-	
-	public static OperatorResult<MiniUserModel> sendResgistCode(String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+
+	public static OperatorResult<MiniUserModel> sendResgistCode(Function<Integer, MiniModel> before, String phone,
+			MiniBean config) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		OperatorResult<MiniUserModel> or = new OperatorResult<MiniUserModel>();
-		if(phone == null){
+		if (phone == null) {
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("phone number is empty");
 			return or;
 		}
-		if(!StringUtils.isNumeric(phone)){
+		if (!StringUtils.isNumeric(phone)) {
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("phone number is not real");
 			return or;
 		}
-		if(phone.length() != 11){
+		if (phone.length() != 11) {
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("phone number is not real");
 			return or;
 		}
 		String to = "";
-		if(phone.substring(0, 1).equals("1")){
+		if (phone.substring(0, 1).equals("1")) {
 			to = "+86" + phone;
-		}else if(phone.substring(0, 1).equals("0")){
+		} else if (phone.substring(0, 1).equals("0")) {
 			to = "+81" + phone;
 		}
 		String code = UtilProcess.random4Code();
-		if(config.getDebug()){
+		if (config.getDebug()) {
 			code = "0000";
 		}
 		or.setCode(OpResult.OK.name());
 		MiniUserModel userM = perRegist(code, phone, config);
 		or.setData(userM);
-		if(config.getDebug()){
+		if(before != null) {
+			before.apply(userM.getId());
+		}
+		if (config.getDebug()) {
 			return or;
 		}
 		String mid = config.sendSms(to, String.format("%s code： %s", config.getName(), code));
-		if(mid == null){
+		if (mid == null) {
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("send message error");
 		}
 		return or;
 	}
-	
-	private static MiniUserModel getUserByPhone(MiniUserDao dao, String phone){
+
+	private static MiniUserModel getUserByPhone(MiniUserDao dao, String phone) {
 		MiniQuery query = new MiniQuery();
 		query.setName("find_user_by_phone");
 		List<MiniPair> params = new ArrayList<MiniPair>();
@@ -66,11 +73,12 @@ public class UserProcess {
 		query.setParams(params);
 		return dao.findOneByQuery(query);
 	}
-	
-	private static MiniUserModel perRegist(String code, String phone, MiniBean config) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{	
+
+	private static MiniUserModel perRegist(String code, String phone, MiniBean config)
+			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		MiniUserDao dao = config.getDao(MiniUserDao.class);
 		MiniUserModel user = getUserByPhone(dao, phone);
-		if(user == null){
+		if (user == null) {
 			user = new MiniUserModel();
 			user.setPhone(phone);
 			user.setRole(config.getDefaultUserRole());
@@ -80,21 +88,22 @@ public class UserProcess {
 		return user;
 	}
 
-	public static OperatorResult<MiniUserModel> regist(String phone, String code, MiniBean config) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public static OperatorResult<MiniUserModel> regist(String phone, String code, MiniBean config)
+			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		OperatorResult<MiniUserModel> or = new OperatorResult<MiniUserModel>();
-		if(phone == null || code == null){
+		if (phone == null || code == null) {
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("phone or code is empty");
 			return or;
 		}
 		MiniUserDao dao = config.getDao(MiniUserDao.class);
 		MiniUserModel user = getUserByPhone(dao, phone);
-		if(user == null){
+		if (user == null) {
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("phone not exsit");
 			return or;
 		}
-		if(!user.getPass().equals(code)){
+		if (!user.getPass().equals(code)) {
 			or.setCode(OpResult.ERROR.name());
 			or.setMsg("code not exsit");
 			return or;
@@ -105,8 +114,8 @@ public class UserProcess {
 		or.setData(user);
 		return or;
 	}
-	
-	public static MiniUserModel findByIdAndToken(MiniUserDao dao, String uid, String token){
+
+	public static MiniUserModel findByIdAndToken(MiniUserDao dao, String uid, String token) {
 		MiniQuery query = new MiniQuery();
 		query.setName("find_user_by_phone_and_token");
 		List<MiniPair> params = new ArrayList<MiniPair>();

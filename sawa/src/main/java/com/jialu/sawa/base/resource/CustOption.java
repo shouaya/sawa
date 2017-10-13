@@ -37,7 +37,7 @@ public class CustOption extends MiniResource {
 	public OperatorResult<MiniUserModel> getCode(@QueryParam("phone") String phone) {
 		OperatorResult<MiniUserModel> msg = new OperatorResult<MiniUserModel>();
 		try {
-			msg = UserProcess.sendResgistCode(phone, config);
+			msg = UserProcess.sendResgistCode(null, phone, config);
 		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 			msg.setCode(OpResult.ERROR.name());
 			msg.setMsg("getCode error");
