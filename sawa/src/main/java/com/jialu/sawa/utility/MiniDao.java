@@ -66,7 +66,11 @@ public abstract class MiniDao<T extends MiniModel> extends AbstractDAO<T> {
 		if(query.getParams() != null){
 			for (MiniPair param : query.getParams()) {
 				Object value = UtilProcess.castValue(query.getName(), param);
-				crit.add(Restrictions.eq(param.getKey(), value));
+				if(param.getValue().contains("%")) {
+					crit.add(Restrictions.like(param.getKey(), value));
+				}else {
+					crit.add(Restrictions.eq(param.getKey(), value));
+				}
 			}
 		}
 		return (long) crit.uniqueResult();
@@ -80,8 +84,8 @@ public abstract class MiniDao<T extends MiniModel> extends AbstractDAO<T> {
 
 		if (mquery.getLimit() == null) {
 			query.setMaxResults(maxCount);
-//		} else if (mquery.getLimit() > maxCount) {
-//			query.setMaxResults(maxCount);
+		} else if (mquery.getLimit() > maxCount) {
+			query.setMaxResults(maxCount);
 		} else {
 			query.setMaxResults(mquery.getLimit());
 		}
