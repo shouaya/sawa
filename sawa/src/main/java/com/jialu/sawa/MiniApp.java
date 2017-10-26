@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.hibernate.SessionFactory;
 
@@ -144,8 +143,6 @@ public class MiniApp extends Application<MiniConfiguration> {
 	 */
 	private void registerApi(MiniConfiguration configuration, Environment environment) throws InstantiationException, IllegalAccessException,
 			NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException, IOException {
-		// providers
-		environment.jersey().register(MultiPartFeature.class);
 
 		// filter
 		final ResponseFilter repfilter = new ResponseFilter();
