@@ -153,7 +153,7 @@ public class MiniApp extends Application<MiniConfiguration> {
 		environment.healthChecks().register(this.getName(), healthCheck);
 
 		// resources
-		registerAllResources(environment, configuration.getPackageResource());
+		registerAllResources(environment, configuration);
 
 		// authorization
 		environment.jersey()
@@ -176,16 +176,18 @@ public class MiniApp extends Application<MiniConfiguration> {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 */
-	private void registerAllResources(Environment environment, String packageName)
+	private void registerAllResources(Environment environment, MiniConfiguration configuration)
 			throws IOException, InstantiationException, IllegalAccessException, NoSuchMethodException,
 			SecurityException, IllegalArgumentException, InvocationTargetException {
-		Set<Class<?>> allClasses = ClassPath.from(loader).getTopLevelClasses(packageName).stream()
+		Set<Class<?>> allClasses = ClassPath.from(loader).getTopLevelClasses(configuration.getPackageResource()).stream()
 				.map(info -> info.load()).collect(Collectors.toSet());
 		for (Class<?> resource : allClasses) {
 			Constructor<?> cs = resource.getDeclaredConstructor(new Class[] { MiniBean.class });
 			environment.jersey().register(cs.newInstance(bean));
 		}
 		//load base resource
-		environment.jersey().register(new CustOption(bean));
+		if(configuration.getUseBaseRegist()) {
+			environment.jersey().register(new CustOption(bean));
+		}
 	}
 }

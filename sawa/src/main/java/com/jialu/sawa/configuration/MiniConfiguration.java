@@ -82,7 +82,7 @@ public class MiniConfiguration extends Configuration {
 	@Valid
 	@NotNull
 	@JsonProperty
-	private Boolean chatable;
+	private Boolean useBaseRegist;
 	
 	@Valid
 	@NotNull
@@ -185,12 +185,12 @@ public class MiniConfiguration extends Configuration {
 		this.packageApi = packageApi;
 	}
 
-	public Boolean getChatable() {
-		return chatable;
+	public Boolean getUseBaseRegist() {
+		return useBaseRegist;
 	}
 
-	public void setChatable(Boolean chatable) {
-		this.chatable = chatable;
+	public void setUseBaseRegist(Boolean useBaseRegist) {
+		this.useBaseRegist = useBaseRegist;
 	}
 
 	public Boolean getSecure() {
